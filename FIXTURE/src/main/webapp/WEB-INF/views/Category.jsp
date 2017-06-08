@@ -7,6 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
 <title>Category Page</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,32 +20,41 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
+<style>
+body {
+	background-image: url("resources/tree.jpg");
+	width: 100vw;
+	height: 100vh;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	position: relative;
+}
+</style>
 <body>
+	<%@include file="GeneralHeader.jsp"%>
+
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-4">
 				<div class="category-form">
 					<!--sign up form-->
-					<h2>Category Form</h2>
+					<h2><center>CATEGORY FORM</center></h2>
 					<br>
 					<form:form action="CategoryAddition" commandName="category"
 						method="GET">
-						<table align="center">
+						<table align="right">
+							
 							<tr>
-								<td colspan="2"><center>Category Details</center></td>
-							</tr>
-
-							<tr>
-								<td>CategoryID</td>
+								<td><b>CategoryID</b></td>
 								<td><input type="text" name="catid" /></td>
 							</tr>
 							<tr>
-								<td>Category Name</td>
+								<td><b>Category Name</b></td>
 								<td><input type="text" name="catname" /></td>
 							</tr>
 							<tr>
-								<td>Category Desc</td>
-								<td><textarea name="catdesc" cols="20" rows="5"></textarea></td>
+								<td><b>Category Desc</b></td>
+								<td><textarea name="catdesc" cols="21" rows="5"></textarea></td>
 							</tr>
 
 							<tr>
@@ -55,23 +65,23 @@
 
 						</table>
 					</form:form>
-					<table cellspacing="2" cellpadding="2" align="center">
+					<table cellspacing="10" cellpadding="10"  border="5" align="right">
 
-						<tr >
-							<td>Category ID</td>
-							<td>Category Name</td>
-							<td>Description</td>
-							<td>Operation</td>
+						<tr bgcolor="#D3D3D3" >
+							<td><b>Category ID</b></td>
+							<td><b>Category Name</b></td>
+							<td><b>Description</b></td>
+							<td><b>Operation</b></td>
 						</tr>
 
 						<c:forEach items="${catlist}" var="cat">
 							<tr>
-								<td>${cat.catid}</td>
+								<td >${cat.catid}</td>
 								<td>${cat.catname}</td>
 								<td>${cat.catdesc}</td>
 								<td>
-									<a href="<c:url value="deleteCategory/${cat.catid}"/>">Delete</a>
-									<a href="<c:url value="updateCategory/${cat.catid}"/>">Update</a>
+									<a href="<c:url value="deleteCategory/${cat.catid}"/>"><span class="glyphicon glyphicon-trash">Delete</span></a>
+									<a href="<c:url value="updateCategory/${cat.catid}"/>"><span class="glyphicon glyphicon-edit">Update</span></a>
 								</td>
 							</tr>
 						</c:forEach>

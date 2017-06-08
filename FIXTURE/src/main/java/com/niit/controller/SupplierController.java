@@ -1,6 +1,5 @@
 package com.niit.controller;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,17 +14,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.niit.modaldao.Supplierdao;
 import com.niit.modaldto.Supplier;
 
-
-
-
-
 @Controller
 public class SupplierController 
 {
 	@Autowired
 	Supplierdao supplierdao;
 	
-	@RequestMapping(value="SupplierAddition",method=RequestMethod.GET)
+	@RequestMapping(value="SupplierAddition",method=RequestMethod.POST)
 	public String addSupplier(@RequestParam("sid") int sid,@RequestParam("sname") String sname,@RequestParam("sadd") String sadd,Model m)
 	{	
 		Supplier supplier=new Supplier();
@@ -35,16 +30,15 @@ public class SupplierController
 		
 		supplierdao.addSupplier(supplier);
 		
-		List<Supplier> list=supplierdao.displayAll();
+		List<Supplier> list=supplierdao.retrieve();
 		m.addAttribute("slist",list);
-		
-		return "Supplier";
+	    return "Supplier";
 	}
 	
 	@RequestMapping("Supplier")
 	public String showSupplierPage(Model m)
 	{
-		List<Supplier> list=supplierdao.displayAll();
+		List<Supplier> list=supplierdao.retrieve();
 		m.addAttribute("slist",list);		
 		return "Supplier";
 	}
@@ -53,23 +47,23 @@ public class SupplierController
 	public String deleteSupplier(@PathVariable("sid") int sid,Model m)
 	{
 		supplierdao.deleteSupplier(sid);
-		List<Supplier> list=supplierdao.displayAll();
+		List<Supplier> list=supplierdao.retrieve();
 		m.addAttribute("slist",list);
-		return "Supplier";
+		return "redirect:/Supplier";
 	}
-	@RequestMapping(value="updateSupplier/{sid}",method=RequestMethod.GET)
-	public String readyUpdate(@PathVariable("sname")String sname,Model m)
+	@RequestMapping(value="/updateSupplier/{sid}",method=RequestMethod.GET)
+	public String readyUpdate(@PathVariable("sid")int sid,Model m)
 	{
-		Supplier supplier=supplierdao.getSupplierBySuppliername(sname);
+		Supplier supplier=supplierdao.getSupplierById(sid);
 		m.addAttribute(supplier);
 		
-		List<Supplier> list=supplierdao.displayAll();
+		List<Supplier> list=supplierdao.retrieve();
 		m.addAttribute("slist",list);
 		
 		return "UpdateSupplier";
 	}
 	
-	@RequestMapping(value="UpdateSupplier",method=RequestMethod.GET)
+	@RequestMapping(value="UpdateSupplier",method=RequestMethod.POST)
 	public String updateSupplier(@ModelAttribute("supplier") Supplier supplier,Model m)
 	{
 		supplierdao.updateSupplier(supplier);
@@ -77,7 +71,7 @@ public class SupplierController
 		Supplier supplier1 = new Supplier();
 		m.addAttribute(supplier1);
 		
-		List<Supplier> list=supplierdao.displayAll();
+		List<Supplier> list=supplierdao.retrieve();
 		m.addAttribute("slist",list);
 		
 		return "redirect:/Supplier";

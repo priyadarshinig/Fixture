@@ -26,9 +26,9 @@ public class UserController {
 	public String RegisterUser(@ModelAttribute("user")User user) {
 		System.out.println("Hello "+user.getCustName());
 		userdao.addUser(user);
-		userdao.updateUser(user);
-		userdao.deleteUser(0);
-		userdao.getuserByUsername(null);
+		//userdao.updateUser(user);
+		//userdao.deleteUser(cid);
+		//userdao.getuserByUsername(null);
 		return "Register";
 	}
 

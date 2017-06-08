@@ -1,6 +1,5 @@
 package com.niit.controller;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.niit.modaldao.Categorydao;
 import com.niit.modaldto.Category;
 
-
-
 @Controller
 public class CategoryController 
 {
@@ -30,19 +27,16 @@ public class CategoryController
 		category.setCatid(catid);
 		category.setCatname(catname);
 		category.setCatdesc(catdesc);
-		
-		categorydao.addCategory(category);;
-		
-		List<Category> list=categorydao.displayAll();
+		categorydao.addCategory(category);
+		List<Category> list=categorydao.retrieve();
 		m.addAttribute("catlist",list);
-		
 		return "Category";
 	}
 	
 	@RequestMapping("Category")
 	public String showCategoryPage(Model m)
 	{
-		List<Category> list=categorydao.displayAll();
+		List<Category> list=categorydao.retrieve();
 		m.addAttribute("catlist",list);		
 		return "Category";
 	}
@@ -51,17 +45,17 @@ public class CategoryController
 	public String deleteCategory(@PathVariable("catid") int catid,Model m)
 	{
 		categorydao.deleteCategory(catid);
-		List<Category> list=categorydao.displayAll();
+		List<Category> list=categorydao.retrieve();
 		m.addAttribute("catlist",list);
-		return "Category";
+		return "redirect:/Category";
 	}
-	@RequestMapping(value="updateCategory/{catid}",method=RequestMethod.GET)
+	@RequestMapping(value="/updateCategory/{catid}",method=RequestMethod.GET)
 	public String readyUpdate(@PathVariable("catid")int catid,Model m)
 	{
 		Category category=categorydao.getCategoryById(catid);
 		m.addAttribute(category);
 		
-		List<Category> list=categorydao.displayAll();
+		List<Category> list=categorydao.retrieve();
 		m.addAttribute("catlist",list);
 		
 		return "UpdateCategory";
@@ -75,7 +69,7 @@ public class CategoryController
 		Category category1 = new Category();
 		m.addAttribute(category1);
 		
-		List<Category> list=categorydao.displayAll();
+		List<Category> list=categorydao.retrieve();
 		m.addAttribute("catlist",list);
 		
 		return "redirect:/Category";

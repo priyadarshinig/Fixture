@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <title>FIXTURE</title>
-<%@include file="index.jsp"%>
+<%@include file="GeneralHeader.jsp"%>
 <%@include file="Header.jsp"%>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -35,7 +35,11 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
  <p class="text-primary"><b>Excellence in every small thing we do:</b> We indulge in attention to detail at every step of our journey.
   Hundreds of such small steps ensure that every customer gets great furniture and great service.</p></p>
 </div>
-  </div>
+</div>
 </div>
 </body>
+<footer align="right">
+	<h4>Contact Us at:</h4>
+	<h6>admin@fixture.com</h6>
+</footer>
 </html>
