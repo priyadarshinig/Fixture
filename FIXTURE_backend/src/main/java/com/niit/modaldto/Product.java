@@ -4,8 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
+
 
 @Entity
 @Component
@@ -13,13 +16,21 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int prodid;
-	private int prodprice; 
 	private int stock;
 	private int catid;
 	private int sid;
 	private String prodname; 
 	private String proddesc;
-	
+	private int prodprice; 
+	private boolean enable=true;
+	@Transient
+	private MultipartFile pimage;
+	public MultipartFile getPimage() {
+		return pimage;
+	}
+	public void setPimage(MultipartFile pimage) {
+		this.pimage = pimage;
+	}
 	public int getProdid() {
 		return prodid;
 	}
@@ -61,6 +72,12 @@ public class Product {
 	}
 	public void setProddesc(String proddesc) {
 		this.proddesc = proddesc;
+	}
+	public boolean isEnable() {
+		return enable;
+	}
+	public void setEnable(boolean enable) {
+		this.enable = enable;
 	}
 	
 }

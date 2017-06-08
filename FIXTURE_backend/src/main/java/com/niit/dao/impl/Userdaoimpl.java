@@ -19,17 +19,30 @@ import com.niit.modaldao.Userdao;
 @Repository("userdao")
 public class Userdaoimpl implements Userdao {
 	@Autowired
-	private SessionFactory sessionFactory;
+    SessionFactory sessionFactory;
+	public  Userdaoimpl(SessionFactory sessionFactory)
+    {
+        System.out.println("ProductDAO Object Created");
+        this.sessionFactory=sessionFactory;
+    }
+     
+    @Transactional
+	public void addUser(User user)
+    {
+        Session session=sessionFactory.getCurrentSession();
+        session.save(user);
+    }
+     
+    @Transactional
+    /*public void deleteUser(int cid)
+    {
+        Session session=sessionFactory.getCurrentSession();
+        User user=(User)session.get(User.class,cid);
+        session.delete(user);
+    }*/
 	
-	public void addUser(User user) {
-		Session session = sessionFactory.openSession();
-		Transaction transaction = (Transaction) session.beginTransaction();
-		session.saveOrUpdate(user);
-		transaction.commit();
-		session.close();
-	}
 
-	public void updateUser(User user) {
+	/*public void updateUser(User user) {
 		System.out.println("session started");
 		Session session = sessionFactory.openSession();
 		Transaction transaction = (Transaction) session.beginTransaction();
@@ -39,29 +52,24 @@ public class Userdaoimpl implements Userdao {
 		System.out.println("session closed");
 		session.close();
 
-	}
+	}*/
 
-	public void deleteUser(int cid) {
-		System.out.println("session started");
-		Session session = sessionFactory.openSession();
-		Transaction transaction = (Transaction) session.beginTransaction();
-		session.delete(cid);
-		System.out.println("Transaction going to commit");
-		transaction.commit();
-		System.out.println("session closed");
-		session.close();
-
-
-	}
-
-	public User getuserByUsername(String username) {
+	
+	/*public User getuserByUsername(String username) {
 		Query query=sessionFactory.getCurrentSession().createQuery("from User");
 		query.setString(0, username);
 		return (User) query.uniqueResult();
-	}
+	}*/
 
-	public List<Product> displayAll() {
-		return sessionFactory.getCurrentSession().createQuery("from User").list();
-	}
+	 public List<User> displayAll()
+	    {
+	        Session session=sessionFactory.openSession();
+	        Query query=session.createQuery("from User");
+	        @SuppressWarnings("unchecked")
+	        List<User> list=(List<User>)query.list();
+	        session.close();
+	        return list;
+	    }
 
+	
 }

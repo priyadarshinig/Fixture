@@ -2,57 +2,45 @@ package com.niit.dao.impl;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.niit.modaldao.Supplierdao;
 import com.niit.modaldto.Supplier;
-import org.hibernate.SessionFactory;
 
-@Transactional
+
+
+
 @Repository("supplierdao")
-public class Supplierdaoimpl implements Supplierdao {
+public class Supplierdaoimpl implements Supplierdao 
+{
 	@Autowired
 	SessionFactory sessionFactory;
-	public void addSupplier(Supplier supplier) {
-		Session session = sessionFactory.openSession();
-		Transaction transaction = (Transaction) session.beginTransaction();
-		session.saveOrUpdate(supplier);
-		transaction.commit();
-		session.close();
-		
+	
+	public Supplierdaoimpl(SessionFactory sessionFactory)
+	{
+		this.sessionFactory=sessionFactory;
 	}
-
-	public void updateSupplier(Supplier supplier) {
-		Session session = sessionFactory.openSession();
-		Transaction transaction = (Transaction) session.beginTransaction();
-		session.update(supplier);
-		transaction.commit();
-		session.close();
-		
+	
+	@Transactional
+	public void addSupplier(Supplier supplier)
+	{
+		Session session=sessionFactory.getCurrentSession();
+		session.save(supplier);
 	}
-
-	public void deleteSupplier(int sid) {
-		Session session = sessionFactory.openSession();
-		Transaction transaction = (Transaction) session.beginTransaction();
-		session.delete(sid);
-		transaction.commit();
-		session.close();
-		
+	
+	@Transactional 
+	public void deleteSupplier(int sid)
+	{
+		Session session=sessionFactory.getCurrentSession();
+		Supplier supplier=(Supplier)session.get(Supplier.class,sid);
+		session.delete(supplier);
 	}
-
-	public Supplier getSupplierBySuppliername(String sname) {
-		Session session=sessionFactory.openSession();
-		Supplier supplier=(Supplier)session.get(Supplier.class,sname);
-		session.close();
-		return supplier;
-	}
-
-	public List<Supplier> displayAll() 
+	
+	public List<Supplier> retrieve()
 	{
 		Session session=sessionFactory.openSession();
 		@SuppressWarnings("unchecked")
@@ -61,6 +49,19 @@ public class Supplierdaoimpl implements Supplierdao {
 		return list;
 	}
 
+	public Supplier getSupplierById(int sid) {
+		 Session session=sessionFactory.openSession();
+	        Supplier supplier=(Supplier)session.get(Supplier.class,sid);
+	        session.close();
+	        return supplier;
+	}
 	
+	@Transactional
+	public void updateSupplier(Supplier supplier) {
+		Session session=sessionFactory.getCurrentSession();
+        session.update(supplier);
+	
+	}
+
 	
 }

@@ -9,8 +9,8 @@ public interface Productdao {
 	public void addProduct(Product product);
 	public void updateProduct(Product product);
 	public void deleteProduct(int prodid);
-	public Product getproductByProduct(String prodname);
-	public List<Product> displayAll();
+    public List<Product> retrieveProduct();
+    public Product getProduct(int prodid);
 
 
 }
